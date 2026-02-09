@@ -1,0 +1,9 @@
+{
+  "name": "cardscore-cloudfunctions",
+  "version": "1.0.0",
+  "description": "CardScore 云函数包",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  }
+}

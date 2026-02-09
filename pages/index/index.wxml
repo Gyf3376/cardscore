@@ -1,0 +1,8 @@
+<!-- 首页WXML -->
+<view class="container">
+  <image class="banner" src="/images/banner.png" mode="widthFix"></image>
+  <view class="content">
+    <!-- 原有前端样式内容 -->
+    <button class="chat-btn" bindtap="startChat">开始聊天</button>
+  </view>
+</view>

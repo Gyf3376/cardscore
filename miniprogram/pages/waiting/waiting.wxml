@@ -1,0 +1,39 @@
+<view class="container">
+  <!-- 返回按钮 -->
+  <!--<view class="header">
+    <view class="back-btn" bindtap="goBack">
+      <image src="/assets/icons/arrow-left.svg" mode="aspectFit" />
+    </view>
+  </view>-->
+
+  <!-- 等待大厅 -->
+  <view class="waiting-view">
+    <view class="waiting-header">
+      <view class="room-badge">ROOM: {{roomId}}</view>
+      <view class="header-icon">
+        <image src="/assets/icons/users.svg" mode="aspectFit" />
+      </view>
+      <text class="waiting-title">准备就绪</text>
+      <text class="waiting-desc">等待玩家加入 ({{joinedPlayers.length}}/{{playerCount}})</text>
+    </view>
+
+    <view class="players-grid" style="grid-template-columns: repeat({{playerCount}}, 1fr)">
+      <view class="player-slot" wx:for="{{playerCount}}" wx:key="index">
+        <view class="player-avatar {{item ? 'has-player' : ''}}">
+          <image wx:if="{{joinedPlayers[index]}}" src="{{joinedPlayers[index].avatarUrl}}" mode="aspectFill" />
+          <image wx:else src="/assets/icons/plus.svg" mode="aspectFit" />
+        </view>
+        <text class="player-name">{{joinedPlayers[index] ? joinedPlayers[index].name : '等待中'}}</text>
+      </view>
+    </view>
+
+    <view class="waiting-actions">
+      <button class="btn btn-emerald full-width" bindtap="inviteFriend">邀请微信好友</button>
+      <button
+        class="btn {{canStartGame ? 'btn-dark' : 'btn-disabled'}} full-width"
+        bindtap="startGame">
+        开始游戏
+      </button>
+    </view>
+  </view>
+</view>

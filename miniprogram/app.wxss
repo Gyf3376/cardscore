@@ -1,0 +1,88 @@
+/* 全局样式 */
+page {
+  background-color: #f8fafc;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 通用类 */
+.container {
+  min-height: 100vh;
+}
+
+.btn {
+  border: none;
+  border-radius: 24rpx;
+  padding: 24rpx 48rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background-color: #07C160;
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background-color: #4f46e5;
+  color: #ffffff;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 48rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+/* 颜色变量 */
+.bg-indigo {
+  background-color: #4f46e5;
+}
+
+.bg-emerald {
+  background-color: #07C160;
+}
+
+.bg-amber {
+  background-color: #f59e0b;
+}
+
+.bg-rose {
+  background-color: #e11d48;
+}
+
+.text-indigo {
+  color: #4f46e5;
+}
+
+.text-emerald {
+  color: #07C160;
+}
+
+.text-amber {
+  color: #f59e0b;
+}
+
+.text-rose {
+  color: #e11d48;
+}
+
+.border-indigo {
+  border-color: #4f46e5;
+}
+
+.border-emerald {
+  border-color: #07C160;
+}
+
+.border-amber {
+  border-color: #f59e0b;
+}
+
+.border-rose {
+  border-color: #e11d48;
+}

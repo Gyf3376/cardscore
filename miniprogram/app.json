@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/auth/auth",
+    "pages/room/room",
+    "pages/waiting/waiting",
+    "pages/game/game",
+    "pages/history/history",
+    "pages/rules/rules"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "扑克计分专家",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f8fafc"
+  },
+  "permission": {},
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

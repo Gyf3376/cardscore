@@ -1,0 +1,44 @@
+<view class="history-container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-left" bindtap="goBack">
+      <image src="/assets/icons/x.svg" mode="aspectFit" />
+      <text class="header-title">对局流水</text>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <scroll-view class="history-list" scroll-y>
+    <view class="empty-state" wx:if="{{rounds.length === 0}}">
+      <text class="empty-text">暂无流水记录</text>
+    </view>
+
+    <view class="round-card" wx:for="{{rounds}}" wx:key="id" wx:for-item="round" wx:for-index="idx">
+      <view class="card-header">
+        <view class="round-badge">第 {{rounds.length - idx}} 局</view>
+        <view class="delete-btn" bindtap="deleteRound" data-id="{{round.id}}">
+          <image src="/assets/icons/trash-2.svg" mode="aspectFit" />
+        </view>
+      </view>
+
+      <view class="entries">
+        <view class="entry" wx:for="{{round.entries}}" wx:key="playerId" wx:for-item="entry">
+          <view class="entry-left">
+            <image class="entry-avatar" src="{{entry.playerAvatarUrl || '/assets/icons/user.svg'}}" mode="aspectFill" />
+            <text class="entry-name {{isWinner(round.winnerId, entry.playerId) ? 'winner' : ''}}">
+              {{entry.playerName}}
+            </text>
+            <view wx:if="{{entry.isShutOut}}" class="tag shutout">被关</view>
+            <view wx:if="{{entry.bombCount > 0}}" class="tag bomb">
+              <image src="/assets/icons/zap.svg" mode="aspectFit" class="zap-icon" />
+              <text>{{entry.bombCount}}</text>
+            </view>
+          </view>
+          <text class="entry-score {{entry.scoreChange >= 0 ? 'positive' : 'negative'}}">
+            {{entry.scoreChange > 0 ? '+' : ''}}{{entry.scoreChange}}
+          </text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

@@ -1,0 +1,97 @@
+<view class="modal-overlay" bindtap="handleClose">
+  <view class="modal-content" catchtap="stopPropagation">
+    <view class="modal-header">
+      <text class="modal-title">记一局</text>
+      <view class="close-btn" catchtap="handleClose">
+        <image src="/assets/icons/x.svg" mode="aspectFit" />
+      </view>
+    </view>
+
+    <scroll-view class="modal-body" scroll-y>
+      <!-- 选择获胜者 -->
+      <view class="section">
+        <text class="section-label">谁先出完？</text>
+        <view class="winner-options">
+          <view
+            class="winner-option {{item.id === winnerId ? 'active' : ''}}"
+            wx:for="{{players}}"
+            wx:key="id"
+            bindtap="selectWinner"
+            data-id="{{item.id}}"
+          >
+            <image class="winner-avatar" src="{{item.avatarUrl || '/assets/icons/user.svg'}}" mode="aspectFill" />
+            <text class="winner-name">{{item.name}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 玩家输入 -->
+      <view class="section players-section">
+        <text class="section-label">手牌与炸弹结算</text>
+        <view class="player-input-cards">
+          <view class="player-input-card {{getCardClass(item.id)}}" wx:for="{{players}}" wx:key="id">
+            <view class="card-header">
+              <view class="player-info">
+                <image class="mini-avatar" src="{{item.avatarUrl || '/assets/icons/user.svg'}}" mode="aspectFill" />
+                <text class="player-name">{{item.name}}</text>
+              </view>
+              <!-- 被关按钮 - 只有非获胜者才显示 -->
+              <view
+                wx:if="{{item.id !== winnerId}}"
+                class="shutout-btn {{playerData[item.id].shutOut ? 'active' : ''}}"
+                bindtap="toggleShutOut"
+                data-id="{{item.id}}"
+              >
+                被关扣{{shutOutScore}}
+              </view>
+            </view>
+
+            <!-- 获胜者输入 - 只有获胜者显示 -->
+            <view wx:if="{{item.id === winnerId}}" class="winner-input">
+              <view wx:if="{{allOpponentsShutOut}}" class="special-reward">
+                全关奖励！不计炸弹
+              </view>
+              <view wx:else class="bombs-control">
+                <text class="control-label">本局炸弹：</text>
+                <view class="counter">
+                  <view class="counter-btn" bindtap="decrementBombs" data-id="{{item.id}}">-</view>
+                  <text class="counter-value">{{playerData[item.id].bombs}}</text>
+                  <view class="counter-btn plus" bindtap="incrementBombs" data-id="{{item.id}}">+</view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 输家输入 - 只有非获胜者且未被关才显示 -->
+            <view wx:if="{{item.id !== winnerId && !playerData[item.id].shutOut}}" class="loser-input">
+              <view class="input-row">
+                <view class="input-wrapper">
+                  <text class="input-label">剩牌 (×{{cardUnitPrice}})</text>
+                  <input
+                    type="number"
+                    value="{{playerData[item.id].cards}}"
+                    bindinput="onCardsChange"
+                    data-id="{{item.id}}"
+                    class="number-input"
+                    placeholder="0"
+                  />
+                </view>
+                <view class="bombs-wrapper">
+                  <text class="input-label">炸弹</text>
+                  <view class="mini-counter">
+                    <view class="mini-counter-btn" bindtap="decrementBombs" data-id="{{item.id}}">-</view>
+                    <text class="mini-counter-value">{{playerData[item.id].bombs}}</text>
+                    <view class="mini-counter-btn plus" bindtap="incrementBombs" data-id="{{item.id}}">+</view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="modal-footer">
+      <button class="submit-btn btn-primary" bindtap="handleSubmit">提交战报</button>
+    </view>
+  </view>
+</view>

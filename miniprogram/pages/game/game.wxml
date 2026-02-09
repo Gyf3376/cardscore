@@ -1,0 +1,113 @@
+<view class="game-container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="header-left">
+      <image class="user-avatar" src="{{currentUser.avatarUrl}}" mode="aspectFill" />
+      <view class="header-info">
+        <text class="room-name">房间: {{gameState.roomId}}</text>
+        <text class="sync-status">
+          {{refreshing ? '正在更新数据...' : '微信实时同步中'}}
+        </text>
+      </view>
+    </view>
+    <view class="header-right">
+      <view class="icon-btn" bindtap="goToRules">
+        <image src="/assets/icons/info.svg" mode="aspectFit" />
+      </view>
+      <view class="icon-btn" bindtap="resetGame">
+        <image src="/assets/icons/rotate-ccw.svg" mode="aspectFit" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 主体内容 -->
+  <view class="main-content">
+    <!-- 积分榜 -->
+    <view class="scoreboard">
+      <view class="scoreboard-header">
+        <view class="header-left">
+          <image src="/assets/icons/award.svg" mode="aspectFit" class="award-icon" />
+          <text class="header-title">实时积分榜</text>
+        </view>
+        <view class="live-badge">LIVE SYNC</view>
+      </view>
+      <view class="scoreboard-list">
+        <view class="score-item" wx:for="{{sortedPlayers}}" wx:key="id">
+          <view class="player-info">
+            <view class="avatar-wrapper">
+              <image class="player-avatar" src="{{item.avatarUrl}}" mode="aspectFill" />
+              <view class="rank-badge {{index === 0 ? 'rank-1' : ''}}">
+                <text>{{index + 1}}</text>
+              </view>
+            </view>
+            <view class="player-details">
+              <text class="player-name">{{item.name}}</text>
+              <text wx:if="{{item.isHost}}" class="host-badge">HOST</text>
+              <view class="trend-info">
+                <image
+                  src="{{item.totalScore >= 0 ? '/assets/icons/trending-up.svg' : '/assets/icons/trending-down.svg'}}"
+                  mode="aspectFit"
+                  class="trend-icon"
+                />
+                <text class="trend-text {{item.totalScore >= 0 ? 'positive' : 'negative'}}">
+                  {{item.totalScore >= 0 ? '赢' : '输'}}
+                </text>
+              </view>
+            </view>
+          </view>
+          <view class="score-info">
+            <text class="score {{item.totalScore >= 0 ? 'positive' : 'negative'}}">
+              {{item.totalScore > 0 ? '+' : ''}}{{item.totalScore}}
+            </text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 最近一局 -->
+    <view class="last-round-card" wx:if="{{gameState.rounds.length > 0}}">
+      <view class="last-round-info">
+        <text class="info-label">最近一局</text>
+        <text class="winner-text">
+          获胜者: <text class="winner-name">{{lastRoundWinner}}</text>
+        </text>
+      </view>
+      <view class="detail-btn" bindtap="goToHistory">
+        <text>详情</text>
+        <image src="/assets/icons/chevron-right.svg" mode="aspectFit" />
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{gameState.rounds.length === 0}}">
+      <view class="empty-icon-wrapper">
+        <image src="/assets/icons/sparkles.svg" mode="aspectFit" />
+      </view>
+      <text class="empty-text">房间已就绪，开始记录对局吧！</text>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="action-btn secondary" bindtap="goToHistory">
+      <image src="/assets/icons/history.svg" mode="aspectFit" />
+      <text>战报</text>
+    </view>
+    <view class="action-btn primary" bindtap="openRoundModal">
+      <image src="/assets/icons/plus-circle.svg" mode="aspectFit" />
+      <text>记录得分</text>
+    </view>
+  </view>
+
+  <!-- 记分弹窗组件 -->
+  <round-modal
+    wx:if="{{showRoundModal}}"
+    players="{{sortedPlayers}}"
+    bombBaseFee="{{gameState.bombBaseFee}}"
+    shutOutScore="{{gameState.shutOutScore}}"
+    cardUnitPrice="{{gameState.cardUnitPrice}}"
+    defaultWinnerId="{{defaultWinnerId}}"
+    bind:close="closeRoundModal"
+    bind:submit="onRoundSubmit"
+  />
+</view>

@@ -1,0 +1,23 @@
+{
+  "name": "cardscore-miniprogram",
+  "version": "1.0.0",
+  "description": "扑克计分专家 - 微信小程序",
+  "main": "app.ts",
+  "scripts": {
+    "dev": "echo '请在微信开发者工具中打开项目'",
+    "build": "echo '请在微信开发者工具中点击上传'"
+  },
+  "keywords": [
+    "poker",
+    "card",
+    "score",
+    "miniprogram",
+    "weixin"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/wechat-miniprogram": "^3.4.0",
+    "typescript": "~5.8.2"
+  }
+}

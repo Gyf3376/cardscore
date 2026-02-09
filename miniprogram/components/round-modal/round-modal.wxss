@@ -1,0 +1,350 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16rpx);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 750rpx;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 48rpx 48rpx 0 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+  box-shadow: 0 -8rpx 48rpx rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  padding: 48rpx;
+  border-bottom: 1rpx solid #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.close-btn {
+  width: 48rpx;
+  height: 48rpx;
+  padding: 8rpx;
+  color: #cbd5e1;
+}
+
+.close-btn image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 48rpx;
+  padding-bottom: 120rpx;
+  box-sizing: border-box;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.section-label {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+  margin-bottom: 8rpx;
+}
+
+.winner-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+}
+
+.winner-option {
+  padding: 24rpx;
+  border-radius: 48rpx;
+  border: 4rpx solid #f8fafc;
+  background-color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+  transition: all 0.3s ease;
+}
+
+.winner-option.active {
+  border-color: #4f46e5;
+  background-color: #eef2ff;
+  box-shadow: 0 4rpx 12rpx rgba(79, 70, 229, 0.1);
+}
+
+.winner-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 24rpx;
+}
+
+.winner-name {
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.winner-name.text-indigo {
+  color: #4338ca;
+}
+
+.winner-name.text-slate {
+  color: #64748b;
+}
+
+.players-section {
+  gap: 32rpx;
+}
+
+.player-input-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.player-input-card {
+  padding: 32rpx;
+  border-radius: 48rpx;
+  border: 2rpx solid #f1f5f9;
+  background-color: #ffffff;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.player-input-card.winner {
+  background-color: #fef3c7;
+  border-color: #fde68a;
+}
+
+.player-input-card.shutout {
+  background-color: #fee2e2;
+  border-color: #fecaca;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.mini-avatar {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 24rpx;
+  border: 2rpx solid #ffffff;
+}
+
+.player-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #334155;
+}
+
+.shutout-btn {
+  font-size: 20rpx;
+  font-weight: bold;
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
+  background-color: #f1f5f9;
+  color: #94a3b8;
+  transition: all 0.3s ease;
+}
+
+.shutout-btn.active {
+  background-color: #e11d48;
+  color: #ffffff;
+}
+
+.winner-input {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.special-reward {
+  background-color: rgba(251, 191, 36, 0.2);
+  border-radius: 24rpx;
+  padding: 24rpx;
+  text-align: center;
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #b45309;
+}
+
+.bombs-control {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.control-label {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #f59e0b;
+}
+
+.counter {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.counter-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 24rpx;
+  background-color: #fef3c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #d97706;
+}
+
+.counter-btn.plus {
+  background-color: #fde68a;
+}
+
+.counter-value {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+}
+
+.loser-input {
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.input-row {
+  display: flex;
+  gap: 32rpx;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.input-label {
+  font-size: 18rpx;
+  font-weight: bold;
+  color: #94a3b8;
+}
+
+.number-input {
+  background-color: #f8fafc;
+  border: none;
+  border-radius: 24rpx;
+  padding: 12rpx 16rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  min-height: 48rpx;
+}
+
+.bombs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+  flex: 1;
+}
+
+.bombs-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.mini-counter {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.mini-counter-btn {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 16rpx;
+  background-color: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20rpx;
+}
+
+.mini-counter-btn.plus {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+.mini-counter-value {
+  flex: 1;
+  text-align: center;
+  font-weight: bold;
+  font-size: 20rpx;
+}
+
+.modal-footer {
+  position: sticky;
+  bottom: 0;
+  padding: 32rpx 48rpx 48rpx 48rpx;
+  border-top: 1rpx solid #f8fafc;
+  background-color: #ffffff;
+  flex-shrink: 0;
+  box-shadow: 0 -8rpx 24rpx rgba(0, 0, 0, 0.05);
+}
+
+.submit-btn {
+  width: 100%;
+  height: 96rpx;
+  border-radius: 48rpx;
+  border: none;
+  background-color: #07C160;
+  color: #ffffff;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.2);
+}
+
+.btn-primary:active {
+  transform: scale(0.95);
+}

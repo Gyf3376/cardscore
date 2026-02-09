@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "游戏进行中",
+  "enablePullDownRefresh": true,
+  "backgroundTextStyle": "dark",
+  "usingComponents": {
+    "round-modal": "/components/round-modal/round-modal"
+  }
+}

@@ -1,0 +1,117 @@
+<view class="container">
+  <!-- 首页视图 -->
+  <view class="home-view" wx:if="{{view === 'home'}}">
+    <view class="intro-section">
+      <view class="icon-wrapper">
+        <image src="/assets/icons/users.svg" mode="aspectFit" />
+      </view>
+      <view class="intro-text">
+        <text class="intro-title">选择游戏方式</text>
+        <text class="intro-desc">与身边的战友实时同步记分</text>
+      </view>
+    </view>
+
+    <view class="action-cards">
+      <view class="card action-card" bindtap="goToCreate">
+        <view class="card-left">
+          <view class="icon-box indigo">
+            <image src="/assets/icons/plus.svg" mode="aspectFit" />
+          </view>
+          <view class="card-text">
+            <text class="card-title">开启新房间</text>
+            <text class="card-desc">作为房主，设置游戏规则</text>
+          </view>
+        </view>
+        <image src="/assets/icons/chevron-right.svg" mode="aspectFit" class="arrow" />
+      </view>
+
+      <view class="card action-card" bindtap="goToJoin">
+        <view class="card-left">
+          <view class="icon-box emerald">
+            <image src="/assets/icons/log-in.svg" mode="aspectFit" />
+          </view>
+          <view class="card-text">
+            <text class="card-title">加入已有房间</text>
+            <text class="card-desc">输入房间码或扫码进入</text>
+          </view>
+        </view>
+        <image src="/assets/icons/chevron-right.svg" mode="aspectFit" class="arrow" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 创建房间视图 -->
+  <view class="create-view" wx:if="{{view === 'create'}}">
+    <view class="modal-header">
+      <text class="modal-title">创建房间</text>
+      <view class="close-btn" bindtap="backToHome">
+        <image src="/assets/icons/x.svg" mode="aspectFit" />
+      </view>
+    </view>
+
+    <view class="modal-content">
+      <view class="section">
+        <text class="section-label">对局人数</text>
+        <view class="player-count-options">
+          <view class="count-option {{playerCount === 3 ? 'active' : ''}}" bindtap="setPlayerCount" data-count="3">
+            <text>3 人场</text>
+          </view>
+          <view class="count-option {{playerCount === 4 ? 'active' : ''}}" bindtap="setPlayerCount" data-count="4">
+            <text>4 人场</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="section settings-section">
+        <view class="settings-header">
+          <image src="/assets/icons/settings.svg" mode="aspectFit" class="icon-small" />
+          <text class="settings-title">高级规则</text>
+        </view>
+        <view class="settings-grid">
+          <view class="setting-item">
+            <text class="setting-label">单张/元</text>
+            <input type="number" value="{{cardPrice}}" bindinput="onCardPriceChange" class="setting-input" />
+          </view>
+          <view class="setting-item">
+            <text class="setting-label">炸弹费/人</text>
+            <input type="number" value="{{bombFee}}" bindinput="onBombFeeChange" class="setting-input" />
+          </view>
+          <view class="setting-item">
+            <text class="setting-label">"被关"分</text>
+            <input type="number" value="{{shutOut}}" bindinput="onShutOutChange" class="setting-input" />
+          </view>
+        </view>
+      </view>
+
+      <button class="btn btn-primary full-width" bindtap="createRoom">生成房间码</button>
+    </view>
+  </view>
+
+  <!-- 加入房间视图 -->
+  <view class="join-view" wx:if="{{view === 'join'}}">
+    <view class="modal-header">
+      <text class="modal-title">加入房间</text>
+      <view class="close-btn" bindtap="backToHome">
+        <image src="/assets/icons/x.svg" mode="aspectFit" />
+      </view>
+    </view>
+
+    <view class="join-content">
+      <view class="qr-section">
+        <image src="/assets/icons/qrcode.svg" mode="aspectFit" class="qr-icon" />
+        <text class="qr-text">扫描好友的房间二维码</text>
+      </view>
+
+      <input
+        type="text"
+        maxlength="6"
+        placeholder="输入6位房间码"
+        value="{{roomId}}"
+        bindinput="onRoomIdInput"
+        class="room-input"
+      />
+
+      <button class="btn btn-emerald full-width" bindtap="joinRoom">进入房间</button>
+    </view>
+  </view>
+</view>

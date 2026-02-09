@@ -1,0 +1,155 @@
+.rules-container {
+  min-height: 100vh;
+  background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部 */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #4f46e5;
+  padding: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  color: #ffffff;
+}
+
+.header-left image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.header-title {
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.close-btn {
+  width: 40rpx;
+  height: 40rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.close-btn:active {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.close-btn image {
+  width: 40rpx;
+  height: 40rpx;
+  color: #ffffff;
+}
+
+/* 内容区 */
+.rules-content {
+  flex: 1;
+  padding: 48rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 48rpx;
+}
+
+.rule-section {
+  background-color: #ffffff;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-bottom: 32rpx;
+}
+
+.section-header.indigo {
+  color: #4f46e5;
+}
+
+.section-header.rose {
+  color: #e11d48;
+}
+
+.section-header.amber {
+  color: #d97706;
+}
+
+.section-header image {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+.rule-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.rule-item {
+  display: flex;
+  gap: 8rpx;
+}
+
+.rule-label {
+  font-weight: bold;
+  color: #475569;
+}
+
+.rule-text {
+  color: #64748b;
+  line-height: 1.6;
+}
+
+/* 提示卡片 */
+.tip-card {
+  background-color: #f8fafc;
+  border: 1rpx solid #e2e8f0;
+  border-radius: 32rpx;
+  padding: 32rpx;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #94a3b8;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* 底部 */
+.footer {
+  padding: 32rpx;
+  border-top: 1rpx solid #e2e8f0;
+  background-color: #f8fafc;
+}
+
+.know-btn {
+  width: 100%;
+  height: 88rpx;
+  background-color: #e2e8f0;
+  color: #334155;
+  border: none;
+  border-radius: 32rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.know-btn:active {
+  background-color: #cbd5e1;
+}

@@ -1,0 +1,200 @@
+.container {
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx;
+}
+
+/* 头部 */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 32rpx;
+  z-index: 10;
+}
+
+.back-btn {
+  width: 48rpx;
+  height: 48rpx;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.back-btn image {
+  width: 24rpx;
+  height: 24rpx;
+  color: #94a3b8;
+}
+
+/* 等待大厅视图 */
+.waiting-view {
+  width: 100%;
+  max-width: 750rpx;
+  background-color: #ffffff;
+  border-radius: 64rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  padding: 64rpx;
+}
+
+.waiting-header {
+  background-color: #1e293b;
+  padding: 64rpx;
+  text-align: center;
+  color: #ffffff;
+  position: relative;
+  margin: -64rpx -64rpx 64rpx -64rpx;
+  border-radius: 64rpx 64rpx 0 0;
+}
+
+.room-badge {
+  position: absolute;
+  top: 24rpx;
+  right: 24rpx;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 8rpx 24rpx;
+  border-radius: 32rpx;
+  font-size: 20rpx;
+  font-weight: bold;
+  letter-spacing: 4rpx;
+  backdrop-filter: blur(16rpx);
+}
+
+.header-icon {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32rpx;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.2);
+}
+
+.header-icon image {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+.waiting-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.waiting-desc {
+  font-size: 24rpx;
+  display: block;
+  opacity: 0.9;
+}
+
+.players-grid {
+  padding: 64rpx;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 32rpx;
+}
+
+.player-slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.player-avatar {
+  width: 112rpx;
+  height: 112rpx;
+  border-radius: 32rpx;
+  border: 4rpx solid #f1f5f9;
+  border-style: dashed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  overflow: hidden;
+}
+
+.player-avatar.has-player {
+  border-style: solid;
+  border-color: #10b981;
+  background-color: #ffffff;
+}
+
+.player-avatar image {
+  width: 100%;
+  height: 100%;
+}
+
+.player-name {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #94a3b8;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-slot.has-player .player-name {
+  color: #334155;
+}
+
+.waiting-actions {
+  padding: 0 64rpx 64rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.btn {
+  border: none;
+  border-radius: 48rpx;
+  padding: 32rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn-primary {
+  background-color: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 8rpx 24rpx rgba(79, 70, 229, 0.2);
+}
+
+.btn-emerald {
+  background-color: #07C160;
+  color: #ffffff;
+  box-shadow: 0 8rpx 24rpx rgba(7, 193, 96, 0.2);
+}
+
+.btn-dark {
+  background-color: #0f172a;
+  color: #ffffff;
+  box-shadow: 0 8rpx 24rpx rgba(15, 23, 42, 0.2);
+}
+
+.btn-disabled {
+  background-color: #f1f5f9;
+  color: #cbd5e1;
+  box-shadow: none;
+}

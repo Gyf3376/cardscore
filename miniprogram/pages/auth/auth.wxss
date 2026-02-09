@@ -1,0 +1,221 @@
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 64rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.header-section {
+  margin-bottom: 64rpx;
+  text-align: center;
+}
+
+.logo-wrapper {
+  margin-bottom: 32rpx;
+}
+
+.logo-icon {
+  width: 120rpx;
+  height: 120rpx;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 32rpx rgba(0, 0, 0, 0.1);
+}
+
+.logo-text {
+  font-size: 48rpx;
+  color: #667eea;
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 48rpx;
+}
+
+.app-title {
+  font-size: 56rpx;
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 2rpx;
+}
+
+.app-subtitle {
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 560rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 32rpx;
+}
+
+.user-info-card {
+  background-color: #ffffff;
+  padding: 48rpx;
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #1e293b;
+  margin-bottom: 48rpx;
+  text-align: center;
+}
+
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 48rpx;
+}
+
+/* 头像按钮样式 */
+.avatar-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.avatar-button {
+  width: 160rpx;
+  height: 160rpx;
+  padding: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 6rpx solid #ffffff;
+  background-color: transparent;
+  position: relative;
+  /* 确保严格圆形 */
+  aspect-ratio: 1/1;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar-button::after {
+  border: none;
+}
+
+.avatar-button.placeholder {
+  background-color: #f3f4f6;
+  border: 6rpx solid #e5e7eb;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* 上传遮罩层 */
+.uploading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.uploading-text {
+  font-size: 22rpx;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+/* 上传遮罩层 */
+.uploading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.uploading-text {
+  font-size: 22rpx;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.nickname-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+.input-label {
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #64748b;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 88rpx;
+  padding: 0 24rpx;
+  border: 2rpx solid #e2e8f0;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  color: #1e293b;
+  background-color: #f8fafc;
+  box-sizing: border-box;
+}
+
+.hint-text {
+  font-size: 22rpx;
+  color: #94a3b8;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.auth-btn {
+  width: 100%;
+  height: 96rpx;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #ffffff;
+  border-radius: 48rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.auth-btn::after {
+  border: none;
+}
+
+.auth-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4rpx 16rpx rgba(102, 126, 234, 0.2);
+}
+
+.agreement-text {
+  text-align: center;
+  font-size: 20rpx;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 24rpx;
+}

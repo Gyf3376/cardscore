@@ -1,0 +1,52 @@
+<view class="auth-container">
+  <view class="header-section">
+    <view class="logo-wrapper">
+      <view class="logo-icon">
+        <text class="logo-text">♠️</text>
+      </view>
+    </view>
+  <view class="title-group">
+    <text class="app-title">CardScore</text>
+    <text class="app-subtitle">扑克计分专家 · 微信版</text>
+  </view>
+  </view>
+
+  <view class="auth-form">
+    <view class="user-info-card">
+      <text class="card-title">完善个人信息</text>
+
+      <!-- 头像选择 - 使用官方头像昵称填写组件 -->
+      <view class="avatar-section">
+        <text class="input-label">选择头像</text>
+        <view class="avatar-container">
+          <button
+            class="avatar-button {{avatarUrl ? '' : 'placeholder'}}"
+            open-type="chooseAvatar"
+            bind:chooseavatar="onChooseAvatar">
+            <image class="avatar-img" src="{{avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" />
+            <view wx:if="{{uploading}}" class="uploading-overlay">
+              <text class="uploading-text">上传中...</text>
+            </view>
+          </button>
+        </view>
+        <text class="hint-text">{{uploading ? '正在上传头像到云端...' : '点击头像选择您的微信头像'}}</text>
+      </view>
+
+      <!-- 昵称输入 - 使用官方头像昵称填写组件 -->
+      <view class="nickname-section">
+        <text class="input-label">设置昵称</text>
+        <input
+          type="nickname"
+          class="nickname-input weui-input"
+          placeholder="请输入昵称"
+          value="{{nickname}}"
+          bindblur="onNicknameBlur"
+        />
+        <text class="hint-text">点击输入框后，可在键盘上方选择"使用微信昵称"</text>
+      </view>
+    </view>
+
+    <button class="auth-btn btn-primary" bindtap="handleLogin">确认登录</button>
+    <text class="agreement-text">登录即代表同意《用户协议》及《隐私政策》</text>
+  </view>
+</view>

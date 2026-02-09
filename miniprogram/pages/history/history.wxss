@@ -1,0 +1,165 @@
+.history-container {
+  min-height: 100vh;
+  background-color: #f1f5f9;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 头部 */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+  border-bottom: 1rpx solid #e2e8f0;
+  padding: 32rpx;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.header-left image {
+  width: 48rpx;
+  height: 48rpx;
+  color: #64748b;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #1e293b;
+}
+
+/* 列表 */
+.history-list {
+  flex: 1;
+  padding: 0 32rpx 32rpx 0;
+  max-height: calc(100vh - 120rpx);
+}
+
+.empty-state {
+  padding: 320rpx 0;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #94a3b8;
+}
+
+/* 卡片 */
+.round-card {
+  background-color: #ffffff;
+  border-radius: 48rpx;
+  padding: 40rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+  border: 1rpx solid #f8fafc;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32rpx;
+}
+
+.round-badge {
+  font-size: 20rpx;
+  font-weight: bold;
+  color: #818cf8;
+  background-color: #eef2ff;
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+}
+
+.delete-btn {
+  width: 32rpx;
+  height: 32rpx;
+  color: #cbd5e1;
+}
+
+.delete-btn image {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+.delete-btn:active {
+  color: #e11d48;
+}
+
+.entries {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.entry-left {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.entry-avatar {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 16rpx;
+}
+
+.entry-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #94a3b8;
+}
+
+.entry-name.winner {
+  color: #1e293b;
+}
+
+.tag {
+  display: flex;
+  align-items: center;
+  gap: 4rpx;
+  font-size: 16rpx;
+  padding: 4rpx 8rpx;
+  border-radius: 8rpx;
+  font-weight: bold;
+}
+
+.tag.shutout {
+  background-color: #fee2e2;
+  color: #e11d48;
+}
+
+.tag.bomb {
+  background-color: #eef2ff;
+  color: #4f46e5;
+}
+
+.zap-icon {
+  width: 12rpx;
+  height: 12rpx;
+}
+
+.entry-score {
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 28rpx;
+}
+
+.entry-score.positive {
+  color: #10b981;
+}
+
+.entry-score.negative {
+  color: #e11d48;
+}

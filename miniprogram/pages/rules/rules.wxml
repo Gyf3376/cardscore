@@ -1,0 +1,98 @@
+<view class="rules-container">
+  <view class="header">
+    <view class="header-left">
+      <image src="/assets/icons/book-open.svg" mode="aspectFit" />
+      <text class="header-title">游戏规则说明</text>
+    </view>
+    <view class="close-btn" bindtap="goBack">
+      <image src="/assets/icons/x.svg" mode="aspectFit" />
+    </view>
+  </view>
+
+  <scroll-view class="rules-content" scroll-y>
+    <!-- 基本规则 -->
+    <view class="rule-section">
+      <view class="section-header indigo">
+        <image src="/assets/icons/layers.svg" mode="aspectFit" />
+        <text>基本规则</text>
+      </view>
+      <view class="rule-list">
+        <view class="rule-item">
+          <text class="rule-label">人数：</text>
+          <text class="rule-text">3人（需3张3）或4人（需4张3），不含大小王。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">牌级：</text>
+          <text class="rule-text">3 > 2 > 1 > K > Q > J > 10 > 9 > 8 > 7 > 6 > 5 > 4。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">红桃4：</text>
+          <text class="rule-text">首局由持有红桃4玩家先出，且首发牌型必须包含红桃4。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">必打规则：</text>
+          <text class="rule-text">若有大过的牌必须出，不能不要。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 牌型说明 -->
+    <view class="rule-section">
+      <view class="section-header rose">
+        <image src="/assets/icons/zap.svg" mode="aspectFit" />
+        <text>牌型说明</text>
+      </view>
+      <view class="rule-list">
+        <view class="rule-item">
+          <text class="rule-label">炸弹：</text>
+          <text class="rule-text">四张相同（4张4除外）。炸弹不能空炸，必须打过其他牌。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">三带二：</text>
+          <text class="rule-text">三张相同必须带两张（相同或不同皆可），无飞机。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">顺子：</text>
+          <text class="rule-text">3人最短5连，4人最短4连。顺子不能包含1, 2, 3。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 结算逻辑 -->
+    <view class="rule-section">
+      <view class="section-header amber">
+        <image src="/assets/icons/alert-circle.svg" mode="aspectFit" />
+        <text>结算逻辑</text>
+      </view>
+      <view class="rule-list">
+        <view class="rule-item">
+          <text class="rule-label">单张豁免：</text>
+          <text class="rule-text">最后剩余1张牌的不算输（支付0）。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">顶大规则：</text>
+          <text class="rule-text">若下家报单，上家出单张必须出手中最大的一张。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">被关：</text>
+          <text class="rule-text">若一局未出一张牌则为"被关"，结算剩余牌数翻倍。</text>
+        </view>
+        <view class="rule-item">
+          <text class="rule-label">炸弹费：</text>
+          <text class="rule-text">炸弹生效（未被更大的炸弹盖过且非空炸）时，其他所有玩家需支付炸弹费给该玩家。</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 提示 -->
+    <view class="tip-card">
+      <text class="tip-text">
+        本程序已根据上述规则自动计算每局得分，请在添加对局时如实填写剩余牌数和有效炸弹数。
+      </text>
+    </view>
+  </scroll-view>
+
+  <view class="footer">
+    <button class="know-btn" bindtap="goBack">知道了</button>
+  </view>
+</view>
