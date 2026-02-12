@@ -11,7 +11,8 @@ Page({
     isHost: false,
     cloudReady: false,
     pollingTimer: null as number | null,
-    canStartGame: false
+    canStartGame: false,
+    isRefreshing: false // 添加刷新标志，防止竞态条件
   },
 
   onLoad(options: any) {
@@ -105,6 +106,13 @@ Page({
       return;
     }
 
+    // 防止竞态条件：如果上一次刷新还在进行中，则跳过本次刷新
+    if (this.data.isRefreshing) {
+      return;
+    }
+
+    this.setData({ isRefreshing: true });
+
     try {
       const result = await wx.cloud.callFunction({
         name: 'getRoomData',
@@ -166,6 +174,8 @@ Page({
       }
     } catch (error) {
       console.error('刷新房间数据失败:', error);
+    } finally {
+      this.setData({ isRefreshing: false });
     }
   },
 
@@ -282,7 +292,7 @@ Page({
 
         const settings = {
           bombFee: startResult.settings?.bombFee || 0,
-          shutOutScore: startResult.settings?.shutOut || 0,
+          shutOutScore: startResult.settings?.shutOutScore || 0,
           cardPrice: startResult.settings?.cardPrice || 0
         };
 
@@ -293,7 +303,7 @@ Page({
           playerCount: startResult.playerCount || playerCount,
           isActive: true,
           bombBaseFee: settings.bombFee,
-          shutOutScore: settings.shutOut,
+          shutOutScore: settings.shutOutScore,
           cardUnitPrice: settings.cardPrice
         };
 

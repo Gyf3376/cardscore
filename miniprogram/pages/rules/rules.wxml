@@ -61,7 +61,7 @@
     <!-- 结算逻辑 -->
     <view class="rule-section">
       <view class="section-header amber">
-        <image src="/assets/icons/alert-circle.svg" mode="aspectFit" />
+        <image src="/assets/icons/circle-alert.svg" mode="aspectFit" />
         <text>结算逻辑</text>
       </view>
       <view class="rule-list">

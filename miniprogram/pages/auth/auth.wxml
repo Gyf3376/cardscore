@@ -20,11 +20,22 @@
         <text class="input-label">选择头像</text>
         <view class="avatar-container">
           <button
-            class="avatar-button {{avatarUrl ? '' : 'placeholder'}}"
+            class="avatar-button {{avatarUrl && avatarUrl !== '/images/avatar-placeholder.png' ? '' : 'placeholder'}}"
             open-type="chooseAvatar"
             bind:chooseavatar="onChooseAvatar">
-            <image class="avatar-img" src="{{avatarUrl || '/images/avatar-placeholder.png'}}" mode="aspectFill" />
+            <!-- 默认头像图标（占位状态） -->
+            <view wx:if="{{!avatarUrl || avatarUrl === '/images/avatar-placeholder.png'}}" class="default-avatar-icon">
+              <text class="default-avatar-text">👤</text>
+            </view>
+            <!-- 用户上传的头像 -->
+            <image wx:else class="avatar-img" src="{{avatarUrl}}" mode="scaleToFill" />
+            <!-- 编辑图标提示 -->
+            <view class="edit-icon-overlay">
+              <text class="edit-icon">✎</text>
+            </view>
+            <!-- 上传中遮罩 -->
             <view wx:if="{{uploading}}" class="uploading-overlay">
+              <view class="uploading-spinner"></view>
               <text class="uploading-text">上传中...</text>
             </view>
           </button>

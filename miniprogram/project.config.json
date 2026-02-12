@@ -7,7 +7,7 @@
   "setting": {
     "bundle": false,
     "userConfirmedBundleSwitch": false,
-    "urlCheck": false,
+    "urlCheck": true,
     "scopeDataCheck": false,
     "coverView": true,
     "es6": true,
@@ -43,13 +43,13 @@
     "disableUseStrict": false,
     "condition": false,
     "swc": false,
-    "disableSWC": false,
+    "disableSWC": true,
     "typescript": true,
     "useCompilerPlugins": [
       "typescript"
     ]
   },
-  "cloudfunctionRoot": "./cloudfunctions/",
+  "cloudfunctionRoot": "cloudfunctions/",
   "cloudb": true,
   "compileType": "miniprogram",
   "libVersion": "3.5.2",

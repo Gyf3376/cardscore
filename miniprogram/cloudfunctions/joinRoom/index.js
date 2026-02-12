@@ -10,6 +10,31 @@ exports.main = async (event, context) => {
 
   const { roomId, userId, nickname, avatarUrl } = event
 
+  // 验证输入参数
+  if (!roomId || typeof roomId !== 'string' || roomId.length !== 6) {
+    return {
+      errCode: -4,
+      errMsg: '房间号格式错误',
+      exists: false
+    }
+  }
+
+  if (!userId || typeof userId !== 'string') {
+    return {
+      errCode: -5,
+      errMsg: '用户ID不能为空',
+      exists: false
+    }
+  }
+
+  if (!nickname || typeof nickname !== 'string' || nickname.trim().length === 0) {
+    return {
+      errCode: -6,
+      errMsg: '昵称不能为空',
+      exists: false
+    }
+  }
+
   try {
     // 获取房间信息
     const roomResult = await db.collection('rooms')
@@ -28,6 +53,15 @@ exports.main = async (event, context) => {
     }
 
     const room = roomResult.data[0]
+
+    // 验证房间 playerCount 是否在合理范围内
+    if (!room.playerCount || typeof room.playerCount !== 'number' || room.playerCount < 3 || room.playerCount > 4) {
+      return {
+        errCode: -7,
+        errMsg: '房间配置错误',
+        exists: false
+      }
+    }
 
     // 检查房间是否过期
     const now = Date.now()

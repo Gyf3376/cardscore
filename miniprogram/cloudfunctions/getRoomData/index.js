@@ -5,6 +5,12 @@ cloud.init({
 })
 const db = cloud.database()
 
+// 建议的数据库索引配置，以提高查询性能：
+// - rooms 集合: roomId (唯一索引)
+// - players 集合: roomId + joinedAt (复合索引)
+// - rounds 集合: roomId + timestamp (复合索引)
+// - rounds 集合: id (唯一索引)
+
 exports.main = async (event, context) => {
   console.log('[getRoomData] 收到调用:', event)
 
@@ -12,10 +18,11 @@ exports.main = async (event, context) => {
 
   try {
     // 并行获取房间信息、玩家列表、对局列表
+    // 注意：limit(1) 限制房间查询只返回一条记录，提高性能
     const [roomResult, playersResult, roundsResult] = await Promise.all([
       db.collection('rooms').where({ roomId }).limit(1).get(),
-      db.collection('players').where({ roomId }).orderBy('joinedAt', 'asc').get(),
-      db.collection('rounds').where({ roomId }).orderBy('timestamp', 'desc').get()
+      db.collection('players').where({ roomId }).orderBy('joinedAt', 'asc').limit(10).get(),
+      db.collection('rounds').where({ roomId }).orderBy('timestamp', 'desc').limit(100).get()
     ])
 
     if (roomResult.data.length === 0) {

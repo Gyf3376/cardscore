@@ -3,7 +3,7 @@ import type { UserProfile } from '../../types';
 
 Page({
   data: {
-    avatarUrl: '',
+    avatarUrl: '/images/avatar-placeholder.png',
     nickname: '',
     uploading: false
   },

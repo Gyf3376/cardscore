@@ -43,7 +43,53 @@ Page({
     if (localRoomId) {
       console.log('从本地存储加载房间数据，房间号:', localRoomId);
       this.setData({ roomId: localRoomId });
-      this.goToJoin();
+
+      // 先检查房间状态，再决定是否加入
+      this.checkRoomStatus(localRoomId).then(() => {
+        if (this.data.roomId) {
+          this.goToJoin();
+        }
+      });
+    }
+  },
+
+  /**
+   * 页面显示
+   */
+  onShow() {
+    // 检查房间状态，如果房间已结束，清理本地存储
+    const roomId = wx.getStorageSync('currentRoomId');
+    if (roomId) {
+      this.checkRoomStatus(roomId);
+    }
+  },
+
+  /**
+   * 检查房间状态
+   */
+  async checkRoomStatus(roomId: string) {
+    try {
+      const result = await wx.cloud.callFunction({
+        name: 'getRoomData',
+        data: { roomId }
+      });
+
+      const roomDataResult = result.result as any;
+
+      if (roomDataResult && roomDataResult.errCode === 0) {
+        const room = roomDataResult.room;
+        if (room && room.status === 'ended') {
+          console.log('检测到房间已结束，清理本地存储');
+          wx.removeStorageSync('currentRoomId');
+          this.setData({ roomId: '' });
+          wx.showToast({
+            title: '该房间已结束，请创建新房间',
+            icon: 'none'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('检查房间状态失败:', error);
     }
   },
 
@@ -106,15 +152,24 @@ Page({
    * 输入变化处理
    */
   onCardPriceChange(e: WechatMiniprogram.Input) {
-    this.setData({ cardPrice: parseInt(e.detail.value) || 0 });
+    const value = parseInt(e.detail.value);
+    // 验证输入：非负整数，最大值1000
+    const validValue = Number.isInteger(value) && value >= 0 && value <= 1000 ? value : 0;
+    this.setData({ cardPrice: validValue });
   },
 
   onBombFeeChange(e: WechatMiniprogram.Input) {
-    this.setData({ bombFee: parseInt(e.detail.value) || 0 });
+    const value = parseInt(e.detail.value);
+    // 验证输入：非负整数，最大值100
+    const validValue = Number.isInteger(value) && value >= 0 && value <= 100 ? value : 0;
+    this.setData({ bombFee: validValue });
   },
 
   onShutOutChange(e: WechatMiniprogram.Input) {
-    this.setData({ shutOut: parseInt(e.detail.value) || 0 });
+    const value = parseInt(e.detail.value);
+    // 验证输入：非负整数，最大值100
+    const validValue = Number.isInteger(value) && value >= 0 && value <= 100 ? value : 0;
+    this.setData({ shutOut: validValue });
   },
 
   onRoomIdInput(e: WechatMiniprogram.Input) {

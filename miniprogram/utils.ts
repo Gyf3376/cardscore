@@ -134,6 +134,40 @@ export function validateRoundInput(
   winnerId: string,
   playerData: Record<string, PlayerRoundData>
 ): { valid: boolean; message?: string } {
+  // 检查是否选择了获胜者
+  if (!winnerId) {
+    return {
+      valid: false,
+      message: '请选择获胜者'
+    };
+  }
+
+  // 检查每个玩家的数据
+  for (const player of players) {
+    const data = playerData[player.id];
+
+    if (!data) continue;
+
+    // 跳过获胜者
+    if (player.id === winnerId) continue;
+
+    // 检查非获胜者的数据有效性
+    if (!data.shutOut && data.cards < 0) {
+      return {
+        valid: false,
+        message: '剩余手牌不能为负数'
+      };
+    }
+
+    if (data.bombs < 0) {
+      return {
+        valid: false,
+        message: '炸弹数不能为负数'
+      };
+    }
+  }
+
+  // 检查：输家剩余手牌不能为0张（除非是被关状态）
   const loserWithZeroCardsAndNotShutOut = players.some(
     p => p.id !== winnerId && !playerData[p.id].shutOut && playerData[p.id].cards === 0
   );

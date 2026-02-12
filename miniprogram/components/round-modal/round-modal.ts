@@ -72,9 +72,7 @@ Component({
      */
     selectWinner(e: WechatMiniprogram.TouchEvent) {
       const id = e.currentTarget.dataset.id;
-      console.log('Selecting winner:', id, 'Current winner:', this.data.winnerId);
       this.setData({ winnerId: id });
-      console.log('After set, winner is now:', this.data.winnerId);
     },
 
     /**
@@ -122,9 +120,7 @@ Component({
      * 判断是否获胜者
      */
     isWinner(id: string): boolean {
-      const isWin = id === this.data.winnerId;
-      console.log(`isWinner(${id}):`, isWin, 'winnerId:', this.data.winnerId);
-      return isWin;
+      return id === this.data.winnerId;
     },
 
     /**
@@ -133,14 +129,11 @@ Component({
     getCardClass(id: string): string {
       const { winnerId, playerData } = this.data;
       if (id === winnerId) {
-        console.log(`getCardClass(${id}): winner`);
         return 'winner';
       }
       if (playerData[id]?.shutOut) {
-        console.log(`getCardClass(${id}): shutout`);
         return 'shutout';
       }
-      console.log(`getCardClass(${id}): default`);
       return '';
     },
 

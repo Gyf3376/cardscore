@@ -10,6 +10,54 @@ exports.main = async (event, context) => {
 
   const { roomId, roundId, winnerId, entries } = event
 
+  // 验证输入数据
+  if (!roomId || !roundId || !winnerId || !entries || !Array.isArray(entries)) {
+    return {
+      errCode: -1,
+      errMsg: '参数不完整',
+      roundId: ''
+    }
+  }
+
+  // 验证entries数组不为空
+  if (entries.length === 0) {
+    return {
+      errCode: -2,
+      errMsg: '对局记录不能为空',
+      roundId: ''
+    }
+  }
+
+  // 验证每个entry的格式
+  for (const entry of entries) {
+    if (!entry.playerId || typeof entry.scoreChange !== 'number') {
+      return {
+        errCode: -3,
+        errMsg: '对局记录格式错误',
+        roundId: ''
+      }
+    }
+
+    // 验证分数变化是否为整数且在合理范围内（-9999到9999）
+    if (!Number.isInteger(entry.scoreChange) || Math.abs(entry.scoreChange) > 9999) {
+      return {
+        errCode: -4,
+        errMsg: '分数超出合理范围',
+        roundId: ''
+      }
+    }
+  }
+
+  // 验证winnerId必须在entries中存在
+  const winnerExists = entries.some(entry => entry.playerId === winnerId)
+  if (!winnerExists) {
+    return {
+      errCode: -5,
+      errMsg: '获胜者不在对局记录中',
+      roundId: ''
+    }
+  }
+
   try {
     console.log('创建对局:', { roomId, roundId, winnerId })
 

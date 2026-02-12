@@ -49,8 +49,23 @@ Page({
 
   onUnload() {
     // 清理心跳定时器
+    this.stopHeartbeat();
+  },
+
+  /**
+   * 页面隐藏时清理定时器，防止内存泄漏
+   */
+  onHide() {
+    this.stopHeartbeat();
+  },
+
+  /**
+   * 停止心跳定时器
+   */
+  stopHeartbeat() {
     if (this.data.heartbeatTimer) {
       clearInterval(this.data.heartbeatTimer);
+      this.setData({ heartbeatTimer: null });
     }
   },
 
@@ -118,8 +133,16 @@ Page({
    * 打开记分弹窗
    */
   openRoundModal() {
-    const gameState = this.data.gameState!;
-    const currentUser = this.data.currentUser!;
+    const gameState = this.data.gameState;
+    const currentUser = this.data.currentUser;
+
+    if (!gameState || !currentUser) {
+      wx.showToast({
+        title: '游戏状态异常',
+        icon: 'none'
+      });
+      return;
+    }
 
     // 对玩家进行排序，让当前用户排在首位
     const sortedPlayers = [...gameState.players].sort((a, b) => {
@@ -150,7 +173,15 @@ Page({
    */
   async onRoundSubmit(e: any) {
     const round: Round = e.detail;
-    const gameState = this.data.gameState!;
+    const gameState = this.data.gameState;
+
+    if (!gameState) {
+      wx.showToast({
+        title: '游戏状态异常',
+        icon: 'none'
+      });
+      return;
+    }
 
     if (!this.data.cloudReady) {
       wx.showToast({
@@ -190,7 +221,7 @@ Page({
         const app = getApp();
         app.saveGameState(newGameState);
 
-        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser!.id);
+        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser?.id || '');
         const winner = newPlayers.find(p => p.id === round.winnerId);
 
         this.setData({
@@ -224,7 +255,16 @@ Page({
    * 删除一局记录
    */
   async deleteRound(roundId: string) {
-    const gameState = this.data.gameState!;
+    const gameState = this.data.gameState;
+
+    if (!gameState) {
+      wx.showToast({
+        title: '游戏状态异常',
+        icon: 'none'
+      });
+      return;
+    }
+
     const roundToDelete = gameState.rounds.find((r: Round) => r.id === roundId);
 
     if (!roundToDelete) return;
@@ -265,7 +305,7 @@ Page({
         const app = getApp();
         app.saveGameState(newGameState);
 
-        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser!.id);
+        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser?.id || '');
         const lastRoundWinner = newRounds.length > 0
           ? newPlayers.find(p => p.id === newRounds[0].winnerId)?.name || ''
           : '';
@@ -454,7 +494,7 @@ Page({
         const app = getApp();
         app.saveGameState(newGameState);
 
-        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser!.id);
+        const sortedPlayers = getRankedPlayersForCurrentUser(newPlayers, this.data.currentUser?.id || '');
         const lastRoundWinner = formattedRounds.length > 0
           ? newPlayers.find((p: Player) => p.id === formattedRounds[0].winnerId)?.name || ''
           : '';

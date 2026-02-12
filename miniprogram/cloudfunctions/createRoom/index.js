@@ -12,11 +12,41 @@ exports.main = async (event, context) => {
 
   const { userId, hostNickname, hostAvatarUrl, settings, playerCount } = event
 
-  // 生成房间号（6位随机数字）
-  const chars = '0123456789'
-  let roomId = ''
-  for (let i = 0; i < 6; i++) {
-    roomId += chars.charAt(Math.floor(Math.random() * chars.length))
+  // 生成更安全的房间号（6位数字，带冲突检测）
+  const generateRoomId = () => {
+    let roomId = ''
+    for (let i = 0; i < 6; i++) {
+      roomId += Math.floor(Math.random() * 10).toString()
+    }
+    return roomId
+  }
+
+  // 检查房间ID是否已存在，最多重试10次
+  let roomId = generateRoomId()
+  let roomExists = true
+  let retryCount = 0
+  const maxRetries = 10
+
+  while (roomExists && retryCount < maxRetries) {
+    const existingRoom = await db.collection('rooms').where({
+      roomId
+    }).limit(1).get()
+
+    if (existingRoom.data.length === 0) {
+      roomExists = false
+    } else {
+      roomId = generateRoomId()
+      retryCount++
+    }
+  }
+
+  if (roomExists) {
+    return {
+      errCode: -2,
+      errMsg: '生成房间号失败，请重试',
+      roomId: '',
+      expiresAt: ''
+    }
   }
 
   // 计算过期时间（24小时后）
