@@ -97,7 +97,7 @@
     </view>
 
     <view class="join-content">
-      <view class="qr-section">
+      <view class="qr-section" bindtap="scanQRCode">
         <image src="/assets/icons/qrcode.svg" mode="aspectFit" class="qr-icon" />
         <text class="qr-text">扫描好友的房间二维码</text>
       </view>

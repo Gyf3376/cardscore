@@ -1,0 +1,36 @@
+<view class="modal-overlay" wx:if="{{visible}}" bindtap="handleClose">
+  <view class="modal-content" catchtap="stopPropagation">
+    <!-- 关闭按钮 -->
+    <view class="close-btn" bindtap="handleClose">
+      <image src="/assets/icons/x.svg" mode="aspectFit" />
+    </view>
+
+    <!-- 二维码区域 -->
+    <view class="qrcode-section">
+      <text class="section-title">扫码加入房间</text>
+
+      <view class="qrcode-wrapper">
+        <canvas type="2d" id="qrcode-canvas" class="qrcode-canvas"></canvas>
+      </view>
+
+      <!-- 房间号显示 -->
+      <view class="room-code-card">
+        <text class="room-code-label">房间号</text>
+        <text class="room-code-value">{{roomId}}</text>
+      </view>
+
+      <!-- 提示文本 -->
+      <text class="hint-text">好友扫描上方二维码或输入房间号即可加入</text>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-buttons">
+      <button class="action-btn secondary" bindtap="copyRoomId">
+        <text>复制房间号</text>
+      </button>
+      <button class="action-btn primary" open-type="share">
+        <text>分享给微信好友</text>
+      </button>
+    </view>
+  </view>
+</view>

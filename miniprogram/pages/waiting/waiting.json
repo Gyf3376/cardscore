@@ -1,5 +1,7 @@
 {
   "navigationBarTitleText": "等待玩家",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "qrcode-modal": "/components/qrcode-modal/qrcode-modal"
+  }
 }

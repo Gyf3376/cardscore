@@ -178,7 +178,134 @@ Page({
   },
 
   /**
-   * 创建房间（使用云函数）
+   * 扫描二维码 - 扫码成功后自动加入房间
+   */
+  scanQRCode() {
+    const app = getApp();
+    const currentUser = app.globalData.currentUser;
+
+    if (!currentUser) {
+      wx.showToast({
+        title: '请先登录',
+        icon: 'none'
+      });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/auth/auth'
+        });
+      }, 1500);
+      return;
+    }
+
+    wx.scanCode({
+      success: async (res) => {
+        console.log('扫码结果:', res);
+        let scanResult = res.result as string;
+
+        // 处理微信小程序二维码的各种格式
+        // 1. mini-program路径：pages/room/room?roomId=123456
+        // 2. WeChat短链接（扫码后显示提示，请使用微信扫码）
+        if (scanResult.includes('mp.weixin.qq.com') || scanResult.includes('http://wx.mp')) {
+          wx.showModal({
+            title: '请使用微信扫码',
+            content: '检测到微信小程序码，请在微信中使用"扫一扫"功能扫码',
+            showCancel: false
+          });
+          return;
+        }
+
+        // 3. 检查是否是mini-program路径格式（包含 roomId=）
+        if (!/^\d{3,6}$/.test(scanResult)) {
+          // 如果不是纯数字房间号，尝试从路径中提取房间号
+          if (scanResult.includes('pages/room/room') || scanResult.includes('roomId=')) {
+            // 从路径中提取房间号
+            const match = scanResult.match(/roomId=([^&\s]+)/);
+            if (match && match[1]) {
+              scanResult = match[1];
+              console.log('从路径中提取房间号:', scanResult);
+            } else {
+              console.error('无法从二维码中提取房间号:', scanResult);
+              wx.showToast({
+                title: '无效的房间二维码',
+                icon: 'none'
+              });
+              return;
+            }
+          } else {
+            console.error('无效的扫码结果:', scanResult);
+            wx.showToast({
+              title: '无效的房间二维码',
+              icon: 'none'
+            });
+            return;
+          }
+        }
+
+        // 验证最终scanResult是3-6位数字并加入房间
+        if (/^\d{3,6}$/.test(scanResult)) {
+          wx.showLoading({ title: '加入房间中...', mask: true });
+
+          try {
+            const joinResult = await wx.cloud.callFunction({
+              name: 'joinRoom',
+              data: {
+                roomId: scanResult,
+                userId: currentUser.id,
+                nickname: currentUser.name,
+                avatarUrl: currentUser.avatarUrl
+              }
+            });
+
+            wx.hideLoading();
+
+            const resultData = joinResult.result as any;
+            if (resultData && resultData.errCode === 0 && resultData.exists) {
+              console.log('加入房间成功，跳转到等待页面');
+              wx.setStorageSync('currentRoomId', scanResult);
+              wx.redirectTo({
+                url: `/pages/waiting/waiting?roomId=${scanResult}`
+              });
+            } else {
+              wx.showToast({
+                title: resultData?.errMsg || '房间不存在或已结束',
+                icon: 'none'
+              });
+            }
+          } catch (error) {
+            console.error('扫码加入房间失败:', error);
+            wx.hideLoading();
+            wx.showToast({
+              title: '加入房间失败',
+              icon: 'none'
+            });
+          }
+        } else {
+          wx.showToast({
+            title: '无效的房间二维码',
+            icon: 'none'
+          });
+        }
+      },
+      fail: (err) => {
+        console.error('扫码失败:', err);
+        if (err.errMsg.includes('permission')) {
+          wx.showModal({
+            title: '需要相机权限',
+            content: '扫码需要使用您的相机，请在设置中开启相机权限',
+            showCancel: false
+          });
+        } else {
+          wx.showToast({
+            title: '扫码取消或失败',
+            icon: 'none'
+          });
+        }
+      }
+    });
+  },
+
+  /**
+   * 创建房间
    */
   async createRoom() {
     const app = getApp();
@@ -189,21 +316,12 @@ Page({
         title: '请先登录',
         icon: 'none'
       });
-      return;
-    }
-
-    if (!this.data.cloudReady) {
-      wx.showLoading({ title: '初始化云开发...', mask: true });
-      const ready = await this.initCloud();
-      wx.hideLoading();
-      if (!ready) {
-        wx.showToast({
-          title: '云开发初始化失败',
-          icon: 'none'
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/auth/auth'
         });
-        return;
-      }
-      this.setData({ cloudReady: true });
+      }, 1500);
+      return;
     }
 
     wx.showLoading({ title: '创建房间中...', mask: true });
@@ -216,9 +334,9 @@ Page({
           hostNickname: currentUser.name,
           hostAvatarUrl: currentUser.avatarUrl,
           settings: {
+            cardPrice: this.data.cardPrice,
             bombFee: this.data.bombFee,
-            shutOutScore: this.data.shutOut,
-            cardPrice: this.data.cardPrice
+            shutOut: this.data.shutOut
           },
           playerCount: this.data.playerCount
         }
@@ -226,22 +344,16 @@ Page({
 
       wx.hideLoading();
 
-      const cloudResult = result.result as any;
-      if (cloudResult && cloudResult.errCode === 0) {
-        const roomId = cloudResult.roomId;
-        console.log('房间创建成功，房间号:', roomId);
-
-        // 保存房间数据到本地（缓存）
-        wx.setStorageSync('currentRoomId', roomId);
-
-        // 跳转到等待页面
-        console.log('准备跳转到等待页面，URL:', `/pages/waiting/waiting?roomId=${roomId}`);
+      const resultData = result.result as any;
+      if (resultData && resultData.errCode === 0) {
+        console.log('创建房间成功，房间号:', resultData.roomId);
+        wx.setStorageSync('currentRoomId', resultData.roomId);
         wx.redirectTo({
-          url: `/pages/waiting/waiting?roomId=${roomId}`
+          url: `/pages/waiting/waiting?roomId=${resultData.roomId}`
         });
       } else {
         wx.showToast({
-          title: cloudResult?.errMsg || '创建房间失败',
+          title: resultData?.errMsg || '创建房间失败',
           icon: 'none'
         });
       }
@@ -256,17 +368,9 @@ Page({
   },
 
   /**
-   * 加入房间（使用云函数）
+   * 加入房间（手动输入房间号）
    */
   async joinRoom() {
-    if (this.data.roomId.length !== 6) {
-      wx.showToast({
-        title: '请输入6位房间码',
-        icon: 'none'
-      });
-      return;
-    }
-
     const app = getApp();
     const currentUser = app.globalData.currentUser;
 
@@ -275,21 +379,30 @@ Page({
         title: '请先登录',
         icon: 'none'
       });
+      setTimeout(() => {
+        wx.redirectTo({
+          url: '/pages/auth/auth'
+        });
+      }, 1500);
       return;
     }
 
-    if (!this.data.cloudReady) {
-      wx.showLoading({ title: '初始化云开发...', mask: true });
-      const ready = await this.initCloud();
-      wx.hideLoading();
-      if (!ready) {
-        wx.showToast({
-          title: '云开发初始化失败',
-          icon: 'none'
-        });
-        return;
-      }
-      this.setData({ cloudReady: true });
+    const roomId = this.data.roomId.trim();
+
+    if (!roomId) {
+      wx.showToast({
+        title: '请输入房间号',
+        icon: 'none'
+      });
+      return;
+    }
+
+    if (!/^\d{3,6}$/.test(roomId)) {
+      wx.showToast({
+        title: '房间号格式错误',
+        icon: 'none'
+      });
+      return;
     }
 
     wx.showLoading({ title: '加入房间中...', mask: true });
@@ -298,7 +411,7 @@ Page({
       const result = await wx.cloud.callFunction({
         name: 'joinRoom',
         data: {
-          roomId: this.data.roomId,
+          roomId: roomId,
           userId: currentUser.id,
           nickname: currentUser.name,
           avatarUrl: currentUser.avatarUrl
@@ -307,17 +420,16 @@ Page({
 
       wx.hideLoading();
 
-      const joinResult = result.result as any;
-      if (joinResult && joinResult.errCode === 0 && joinResult.exists) {
+      const resultData = result.result as any;
+      if (resultData && resultData.errCode === 0 && resultData.exists) {
         console.log('加入房间成功，跳转到等待页面');
-
-        // 跳转到等待页面
+        wx.setStorageSync('currentRoomId', roomId);
         wx.redirectTo({
-          url: `/pages/waiting/waiting?roomId=${this.data.roomId}`
+          url: `/pages/waiting/waiting?roomId=${roomId}`
         });
       } else {
         wx.showToast({
-          title: joinResult?.errMsg || '房间不存在',
+          title: resultData?.errMsg || '房间不存在或已结束',
           icon: 'none'
         });
       }

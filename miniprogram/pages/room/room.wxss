@@ -327,7 +327,7 @@
 
 /* 加入房间视图 */
 .join-content {
-  padding: 0 64rpx 64rpx;
+  padding: 0 32rpx 64rpx;
   display: flex;
   flex-direction: column;
   gap: 32rpx;
@@ -358,14 +358,16 @@
   background-color: #f8fafc;
   border: 2rpx solid #e2e8f0;
   border-radius: 48rpx;
-  padding: 32rpx;
+  padding: 28rpx 24rpx;
   text-align: center;
-  font-size: 48rpx;
-  font-weight: 900;
-  letter-spacing: 16rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #334155;
   box-sizing: border-box;
   transition: all 0.3s ease;
+  min-height: 96rpx;
 }
 
 .room-input:focus {

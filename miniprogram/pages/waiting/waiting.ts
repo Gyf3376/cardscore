@@ -12,7 +12,8 @@ Page({
     cloudReady: false,
     pollingTimer: null as number | null,
     canStartGame: false,
-    isRefreshing: false // 添加刷新标志，防止竞态条件
+    isRefreshing: false, // 添加刷新标志，防止竞态条件
+    showQRCodeModal: false // 二维码弹窗显示状态
   },
 
   onLoad(options: any) {
@@ -221,29 +222,19 @@ Page({
   },
 
   /**
-   * 邀请好友
+   * 邀请好友 - 显示二维码弹窗
    */
   inviteFriend() {
-    wx.showShareMenu({
-      withShareTicket: true
-    });
+    console.log('inviteFriend 方法被调用，当前 roomId:', this.data.roomId);
+    this.setData({ showQRCodeModal: true });
+    console.log('showQRCodeModal 已设置为 true');
+  },
 
-    wx.setClipboardData({
-      data: this.data.roomId,
-      success: () => {
-        wx.showToast({
-          title: '房间号已复制',
-          icon: 'success'
-        });
-      }
-    });
-
-    wx.showModal({
-      title: '邀请好友',
-      content: `房间号：${this.data.roomId}\n\n由于使用云存储，所有设备都能加入房间！\n\n请将房间号分享给好友，好友可在"加入房间"界面输入该房间号加入。`,
-      showCancel: false,
-      confirmText: '知道了'
-    });
+  /**
+   * 关闭二维码弹窗
+   */
+  closeQRCodeModal() {
+    this.setData({ showQRCodeModal: false });
   },
 
   /**
@@ -341,5 +332,16 @@ Page({
   onUnload() {
     // 停止轮询
     this.stopPolling();
+  },
+
+  /**
+   * 分享功能
+   */
+  onShareAppMessage() {
+    return {
+      title: `加入我的扑克房间，房间号：${this.data.roomId}`,
+      path: `/pages/room/room?roomId=${this.data.roomId}`,
+      imageUrl: ''
+    };
   }
 });
